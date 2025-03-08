@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Result</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="bg-white text-black sticky top-0 z-50 shadow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo -->
+            <div class="flex items-center space-x-4">
+                <a href="#" class="text-2xl font-bold">Student Result Viewer</a>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 flex items-center">
+                <a th:href="@{'/'}" class="hover:bg-gray-200 px-4 py-2 rounded-md transition">Home</a>
+                <a th:href="@{'/view-result'}" class="hover:bg-gray-200 px-4 py-2 rounded-md transition">View Result</a>
+                <a th:href="@{'/admin/add-result'}" class="hover:bg-gray-200 px-4 py-2 rounded-md transition">Add
+                    Result</a>
+                <a class="hover:bg-gray-200 px-4 py-2 rounded-md transition" th:text="${name}"></a>
+
+               <di>
+                   <form th:action="@{'/user-logout'}" method="post">
+                       <button class="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+                           Logout
+                       </button>
+                   </form>
+               </di>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-black focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white">
+        <a href="#home" class="block px-4 py-2 text-sm hover:bg-gray-200 transition">Home</a>
+        <a href="#view-result" class="block px-4 py-2 text-sm hover:bg-gray-200 transition">View Result</a>
+        <a href="#add-result" class="block px-4 py-2 text-sm hover:bg-gray-200 transition">Add Result</a>
+        <a href="#help" class="block px-4 py-2 text-sm hover:bg-gray-200 transition">Help</a>
+    </div>
+</nav>
+
+<!-- Show Add Result Form -->
+<div class="lg:w-1/2 w-full py-10 border shadow px-5 mt-3 rounded mx-auto">
+    <h1 class="text-3xl text-center text-gray-700 font-bold">
+        Add result
+    </h1>
+    <p class="mt-2 text-gray-500 text-center">Add student result to database..</p>
+
+    <form novalidate th:action="@{'/admin/add-result-action'}" th:object="${studentForm}" method="post"
+          enctype="multipart/form-data">
+
+        <!-- Name Field -->
+        <div class="mt-5">
+            <label for="studentName" class="block mb-2 text-sm font-medium text-gray-900">Student Name</label>
+            <input th:field="*{name}" type="text" id="studentName"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                   placeholder="Enter student name" required/>
+            <span class="text-red-700 p-2" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+
+        <!-- RollNumber Field -->
+        <div class="mt-5">
+            <label for="rollNumber" class="block mb-2 text-sm font-medium text-gray-900">RollNumber</label>
+            <input th:field="*{rollNumber}" type="text" id="rollNumber"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                   placeholder="Enter rollNumber" required/>
+            <span class="text-red-700 p-2" th:if="${#fields.hasErrors('rollNumber')}" th:errors="*{rollNumber}"></span>
+        </div>
+
+        <!-- Email Field -->
+        <div class="mt-5">
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
+            <input th:field="*{email}" type="email" id="email"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                   placeholder="Enter your email" required/>
+            <span class="text-red-700 p-2" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        </div>
+
+        <!-- Address Field -->
+        <div class="mt-5">
+            <label for="address" class="block mb-2 text-sm font-medium text-gray-900">Address</label>
+            <textarea th:field="*{address}" type="email" id="address"
+                      class="bg-gray-50 h-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      placeholder="Enter your address" required></textarea>
+            <span class="text-red-700 p-2" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+        </div>
+
+        <!-- School Name Field -->
+        <div class="mt-5">
+            <label for="schoolName" class="block mb-2 text-sm font-medium text-gray-900">School-Name</label>
+            <input th:field="*{schoolName}" type="text" id="schoolName"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                   placeholder="Enter school name" required/>
+            <span class="text-red-700 p-2" th:if="${#fields.hasErrors('schoolName')}" th:errors="*{schoolName}"></span>
+        </div>
+
+        <!-- Date of Birth Field -->
+        <div class="mt-5">
+            <label for="dateOfBirth" class="block mb-2 text-sm font-medium text-gray-900">DateOfBirth</label>
+            <input th:field="*{dateOfBirth}" type="date" id="dateOfBirth"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                   placeholder="Enter DateOfBirth" required/>
+            <span class="text-red-700 p-2" th:if="${#fields.hasErrors('dateOfBirth')}"
+                  th:errors="*{dateOfBirth}"></span>
+        </div>
+
+        <!-- Standard Field -->
+        <div class="">
+            <label for="standard" class="block mb-2 text-sm font-medium text-gray-900">Standard</label>
+            <select th:field="*{standard}"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    id="standard" required>
+                <option th:each="standard : ${standardOptions}" th:value="${standard}" th:text="${standard}"></option>
+            </select>
+        </div>
+
+        <!-- Father Name Field -->
+        <div class="mt-5">
+            <label for="fatherName" class="block mb-2 text-sm font-medium text-gray-900">FatherName</label>
+            <input th:field="*{fatherName}" type="text" id="fatherName"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                   placeholder="Enter father name" required/>
+            <span class="text-red-700 p-2" th:if="${#fields.hasErrors('fatherName')}" th:errors="*{fatherName}"></span>
+        </div>
+
+        <!-- Mother Name Field -->
+        <div class="mt-5">
+            <label for="motherName" class="block mb-2 text-sm font-medium text-gray-900">MotherName</label>
+            <input th:field="*{motherName}" type="text" id="motherName"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                   placeholder="Enter mother name" required/>
+            <span class="text-red-700 p-2" th:if="${#fields.hasErrors('motherName')}" th:errors="*{motherName}"></span>
+        </div>
+
+        <!-- Gender Selection -->
+        <div class="mt-4">
+            <label class="block mb-2 text-sm font-medium text-gray-900">Select Gender</label>
+            <div class="flex items-center mb-4">
+                <input id="default-radio-1" type="radio" th:field="*{gender}" th:value="male"
+                       class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-300 focus:ring-blue-500 ">
+                <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900">Male</label>
+            </div>
+            <div class="flex items-center mb-4">
+                <input id="default-radio-2" type="radio" th:field="*{gender}" th:value="female"
+                       class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-300 focus:ring-blue-500 ">
+                <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900">Female</label>
+            </div>
+            <span class="text-red-500" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
+        </div>
+
+
+        <!-- Subjects and Marks -->
+        <div>
+            <div id="marks_container">
+
+            </div>
+
+            <!-- Button to Add Subject Marks -->
+            <div class="flex justify-center my-4">
+                <button onclick="addMarksRow()" type="button"
+                        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                    Add Subject Marks
+                </button>
+            </div>
+        </div>
+
+        <!-- Submit and Clear Buttons -->
+        <div class="mt-4 flex justify-center">
+            <button type="submit"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                Add Result
+            </button>
+            <button type="reset"
+                    class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
+                Clear
+            </button>
+        </div>
+
+
+        <script>
+            let marksRowIndex = 0;
+
+            function addMarksRow() {
+                const container = document.getElementById('marks_container');
+
+                // Create a new row of subject marks inputs
+                const newRow = `
+                    <div class="flex gap-4 rounded border px-3 py-4" id="marks_row_${marksRowIndex}">
+                        <div class="flex flex-col">
+                            <label for="subject_${marksRowIndex}">Subject</label>
+                            <input id="subject_${marksRowIndex}" name="marks[${marksRowIndex}].subjectName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                   type="text" placeholder="Enter subject" required>
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="marks_${marksRowIndex}">Marks</label>
+                            <input id="marks_${marksRowIndex}" name="marks[${marksRowIndex}].marks" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                   type="number" placeholder="Enter marks" min="0" max="100" required>
+                        </div>
+
+                        <div class="flex flex-col">
+                            <label for="max_marks_${marksRowIndex}">Max Marks</label>
+                            <input id="max_marks_${marksRowIndex}" name="marks[${marksRowIndex}].maxMarks" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                   type="number" placeholder="Enter max marks" min="0" required>
+                        </div>
+
+                        <div class="flex flex-col">
+                            <label for="grade_${marksRowIndex}">Grade</label>
+                            <input id="grade_${marksRowIndex}" name="marks[${marksRowIndex}].grade" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                   type="text" placeholder="Enter grade" required>
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="feedback_${marksRowIndex}">Feedback</label>
+                            <input id="feedback_${marksRowIndex}" name="marks[${marksRowIndex}].feedback" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                   type="text" placeholder="Enter feedback" required>
+                        </div>
+
+                        <!-- Button to remove this row -->
+                        <div class="flex justify-end">
+                            <button type="button" onclick="removeMarksRow(${marksRowIndex})" class="text-red-500 hover:text-red-700">Remove</button>
+                        </div>
+                    </div>
+                `;
+
+                container.insertAdjacentHTML('beforeend', newRow);
+
+                // Increment index for next row
+                marksRowIndex++;
+            }
+
+            function removeMarksRow(index) {
+                const row = document.getElementById(`marks_row_${index}`);
+                if (row) {
+                    row.remove();
+                }
+            }
+        </script>
+
+
+</body>
+</html>
